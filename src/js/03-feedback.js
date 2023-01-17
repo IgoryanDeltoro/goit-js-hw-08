@@ -8,7 +8,6 @@ const ref = {
 };
 
 const LOCALSTORAGE_KEY = 'feedback-form-state';
-const fieldValue = {};
 
 ref.form.addEventListener('input', throttle(hendleEventForm, 1000));
 ref.form.addEventListener('submit', hendleEventSubmit);
@@ -16,8 +15,11 @@ ref.form.addEventListener('submit', hendleEventSubmit);
 fillingFormFromLS();
 
 function hendleEventForm(eve) {
-  fieldValue[eve.target.name] = eve.target.value;
-  save(LOCALSTORAGE_KEY, fieldValue);
+  let localStorageRequer = load(LOCALSTORAGE_KEY);
+  localStorageRequer = localStorageRequer ? localStorageRequer : {};
+  localStorageRequer[eve.target.name] = eve.target.value;
+
+  save(LOCALSTORAGE_KEY, localStorageRequer);
 }
 
 function hendleEventSubmit(eve) {
